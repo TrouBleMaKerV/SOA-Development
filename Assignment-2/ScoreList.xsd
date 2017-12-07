@@ -6,8 +6,8 @@
 	<import namespace="http://www.nju.edu.cn/schema"
 		schemaLocation="../bin/PersonInfo.xsd" />
 
-	<include schemaLocation="../Student.xsd"></include>
-	<include schemaLocation="../Course.xsd"></include>
+	<include schemaLocation="Student.xsd"></include>
+	<include schemaLocation="Course.xsd"></include>
 	
 
 
