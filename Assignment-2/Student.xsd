@@ -17,6 +17,14 @@
     <element name="学院" type="nju:部门名称类型"></element>
     <element name="宿舍" type="tns:宿舍类型"></element>
     <element name="身份证" type="nju:身份证类型"></element>
+    <element name="学生类型" type="tns:学生类型"></element>
+    <simpleType name="学生类型">
+        <restriction base="string">
+            <enumeration value="本科生"></enumeration>
+            <enumeration value="研究生"></enumeration>
+            <enumeration value="博士生"></enumeration>
+        </restriction>
+    </simpleType>
     <simpleType name="宿舍类型">
         <restriction base="string">
             <length value="5"></length>
