@@ -9,4 +9,10 @@
     		<length value="6"></length>
     	</restriction>
     </simpleType>
+    <element name="课程名称" type="tns:课程名称类型"></element>
+    <simpleType name="课程名称类型">
+        <restriction base="string">
+            <length value="10"></length>
+        </restriction>
+    </simpleType>
 </schema>

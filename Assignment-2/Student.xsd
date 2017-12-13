@@ -1,28 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://jw.nju.edu.cn/schema" xmlns:tns="http://jw.nju.edu.cn/schema"  elementFormDefault="qualified">
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+        targetNamespace="http://jw.nju.edu.cn/schema"
+        xmlns:tns="http://jw.nju.edu.cn/schema"
+        xmlns:nju="http://www.nju.edu.cn/schema"
+        elementFormDefault="qualified">
+    <import namespace="http://www.nju.edu.cn/schema" schemaLocation="PersonInfo.xsd"></import>
+    <include schemaLocation="Course.xsd"></include>
+    <include schemaLocation="ScoreList.xsd"></include>
     <element name="学号" type="tns:学号类型"></element>
-
     <simpleType name="学号类型">
     	<restriction base="string">
     		<length value="9"></length>
     	</restriction>
     </simpleType>
-    <element name="姓名" type="tns:姓名类型"></element>
-    <simpleType name="姓名类型">
-        <restriction base="string">
-            <length value="6"></length>
-        </restriction>
-    </simpleType>
-    <element name="学院" type="tns:学院类型"></element>
-    <simpleType name="学院类型">
-        <restriction base="string">
-            <length value="10"></length>
-        </restriction>
-    </simpleType>
+    <element name="姓名" type="nju:姓名类型"></element>
+    <element name="学院" type="nju:部门名称类型"></element>
     <element name="宿舍" type="tns:宿舍类型"></element>
+    <element name="身份证" type="nju:身份证类型"></element>
     <simpleType name="宿舍类型">
         <restriction base="string">
             <length value="5"></length>
         </restriction>
     </simpleType>
+    <element name="课程成绩列表" type="tns:课程成绩列表类型"></element>
 </schema>
