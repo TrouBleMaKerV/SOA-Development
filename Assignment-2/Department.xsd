@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+        targetNamespace="http://www.nju.edu.cn/schema"
+        xmlns:nju="http://www.nju.edu.cn/schema"
+        elementFormDefault="qualified">
+    <element name="部门名字" type="nju:部门名称类型"></element>
+    <simpleType name="部门名称类型">
+        <restriction base="string">
+            <length value="10"></length>
+        </restriction>
+    </simpleType>
+    <element name="部门电话" type="nju:部门电话类型"></element>
+    <simpleType name="部门电话类型">
+        <restriction base="int">
+            <length value="8"></length>
+        </restriction>
+    </simpleType>
+</schema>

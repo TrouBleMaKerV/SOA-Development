@@ -2,9 +2,10 @@
 <schema xmlns="http://www.w3.org/2001/XMLSchema"
         targetNamespace="http://jw.nju.edu.cn/schema"
         xmlns:tns="http://jw.nju.edu.cn/schema"
+        xmlns:nju="http://www.nju.edu.cn/schema"
         elementFormDefault="qualified">
     <import namespace="http://www.nju.edu.cn/schema"
-            schemaLocation="../bin/PersonInfo.xsd" />
+            schemaLocation="PersonInfo.xsd" />
     <include schemaLocation="Student.xsd"></include>
     <element name="学生列表" type="tns:学生列表类型"></element>
     <complexType name="学生列表类型">
@@ -15,8 +16,8 @@
     <complexType name="学生类型">
         <sequence>
             <element name="学号" type="tns:学号类型"></element>
-            <element name="姓名" type="tns:姓名类型"></element>
-            <element name="学院" type="tns:学院类型"></element>
+            <element name="姓名" type="nju:姓名类型"></element>
+            <element name="学院" type="nju:部门名称类型"></element>
             <element name="宿舍" type="tns:宿舍类型"></element>
         </sequence>
     </complexType>
