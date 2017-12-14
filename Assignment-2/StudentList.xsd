@@ -15,10 +15,7 @@
     </complexType>
     <complexType name="学生类型">
         <sequence>
-            <element name="学号" type="tns:学号类型"></element>
-            <element name="姓名" type="nju:姓名类型"></element>
-            <element name="学院" type="nju:部门名称类型"></element>
-            <element name="宿舍" type="tns:宿舍类型"></element>
+            <element name="学生基本信息" type="tns:学生基本信息类型"></element>
         </sequence>
     </complexType>
 </schema>

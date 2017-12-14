@@ -7,17 +7,20 @@
     <import namespace="http://www.nju.edu.cn/schema" schemaLocation="PersonInfo.xsd"></import>
     <include schemaLocation="Course.xsd"></include>
     <include schemaLocation="ScoreList.xsd"></include>
-    <element name="学号" type="tns:学号类型"></element>
     <simpleType name="学号类型">
     	<restriction base="string">
     		<length value="9"></length>
     	</restriction>
     </simpleType>
-    <element name="姓名" type="nju:姓名类型"></element>
-    <element name="学院" type="nju:部门名称类型"></element>
-    <element name="宿舍" type="tns:宿舍类型"></element>
-    <element name="身份证" type="nju:身份证类型"></element>
-    <element name="学生类型" type="tns:学生类型"></element>
+    <complexType name="学生基本信息类型" >
+        <attribute name="学号" type="tns:学号类型"></attribute>
+        <attribute name="姓名" type="nju:姓名类型"></attribute>
+        <attribute name="学院" type="nju:部门名称类型"></attribute>
+        <attribute name="宿舍" type="tns:宿舍类型"></attribute>
+        <attribute name="身份证" type="nju:身份证类型"></attribute>
+        <attribute name="学生类型" type="tns:学生类型"></attribute>
+    </complexType>
+    <element name="学生基本信息" type="tns:学生基本信息类型"></element>
     <element name="课程列表" type="tns:课程列表类型"></element>
     <complexType name="课程列表类型">
         <sequence minOccurs="1" maxOccurs="unbounded">
