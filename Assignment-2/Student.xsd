@@ -12,6 +12,19 @@
     		<length value="9"></length>
     	</restriction>
     </simpleType>
+
+
+
+    <complexType name="学生信息类型">
+        <sequence>
+            <element name="学生基本信息" type="tns:学生基本信息类型"></element>
+            <element name="课程列表" type="tns:课程列表类型"></element>
+            <element name="课程成绩列表" type="tns:课程成绩列表类型"></element>
+        </sequence>
+    </complexType>
+
+    <element name="学生" type="tns:学生信息类型"></element>
+
     <complexType name="学生基本信息类型" >
         <attribute name="学号" type="tns:学号类型"></attribute>
         <attribute name="姓名" type="nju:姓名类型"></attribute>
@@ -20,8 +33,7 @@
         <attribute name="身份证" type="nju:身份证类型"></attribute>
         <attribute name="学生类型" type="tns:学生类型"></attribute>
     </complexType>
-    <element name="学生基本信息" type="tns:学生基本信息类型"></element>
-    <element name="课程列表" type="tns:课程列表类型"></element>
+
     <complexType name="课程列表类型">
         <sequence minOccurs="1" maxOccurs="unbounded">
             <element name="课程编号" type="tns:课程编号类型"></element>
@@ -40,5 +52,4 @@
             <length value="5"></length>
         </restriction>
     </simpleType>
-    <element name="课程成绩列表" type="tns:课程成绩列表类型"></element>
 </schema>
