@@ -18,6 +18,13 @@
     <element name="宿舍" type="tns:宿舍类型"></element>
     <element name="身份证" type="nju:身份证类型"></element>
     <element name="学生类型" type="tns:学生类型"></element>
+    <element name="课程列表" type="tns:课程列表类型"></element>
+    <complexType name="课程列表类型">
+        <sequence minOccurs="1" maxOccurs="unbounded">
+            <element name="课程编号" type="tns:课程编号类型"></element>
+            <element name="课程名称" type="tns:课程名称类型"></element>
+        </sequence>
+    </complexType>
     <simpleType name="学生类型">
         <restriction base="string">
             <enumeration value="本科生"></enumeration>
