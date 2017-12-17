@@ -1,11 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://jw.nju.edu.cn/schema" xmlns:tns="http://jw.nju.edu.cn/schema"  elementFormDefault="qualified">
-
-    <element name="学号" type="tns:学号类型"></element>
-
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+        targetNamespace="http://jw.nju.edu.cn/schema"
+        xmlns:tns="http://jw.nju.edu.cn/schema"
+        xmlns:nju="http://www.nju.edu.cn/schema"
+        elementFormDefault="qualified">
+    <import namespace="http://www.nju.edu.cn/schema" schemaLocation="PersonInfo.xsd"></import>
+    <include schemaLocation="Course.xsd"></include>
+    <include schemaLocation="ScoreList.xsd"></include>
     <simpleType name="学号类型">
     	<restriction base="string">
     		<length value="9"></length>
     	</restriction>
+    </simpleType>
+
+
+
+    <complexType name="学生信息类型">
+        <sequence>
+            <element name="学生基本信息" type="tns:学生基本信息类型"></element>
+            <element name="课程列表" type="tns:课程列表类型"></element>
+            <element name="课程成绩列表" type="tns:课程成绩列表类型"></element>
+        </sequence>
+    </complexType>
+
+    <element name="学生" type="tns:学生信息类型"></element>
+
+    <complexType name="学生基本信息类型" >
+        <attribute name="学号" type="tns:学号类型"></attribute>
+        <attribute name="姓名" type="nju:姓名类型"></attribute>
+        <attribute name="学院" type="nju:部门名称类型"></attribute>
+        <attribute name="宿舍" type="tns:宿舍类型"></attribute>
+        <attribute name="身份证" type="nju:身份证类型"></attribute>
+        <attribute name="学生类型" type="tns:学生类型"></attribute>
+    </complexType>
+
+    <complexType name="课程列表类型">
+        <sequence minOccurs="1" maxOccurs="unbounded">
+            <element name="课程编号" type="tns:课程编号类型"></element>
+            <element name="课程名称" type="tns:课程名称类型"></element>
+        </sequence>
+    </complexType>
+    <simpleType name="学生类型">
+        <restriction base="string">
+            <enumeration value="本科生"></enumeration>
+            <enumeration value="研究生"></enumeration>
+            <enumeration value="博士生"></enumeration>
+        </restriction>
+    </simpleType>
+    <simpleType name="宿舍类型">
+        <restriction base="string">
+            <length value="5"></length>
+        </restriction>
     </simpleType>
 </schema>
