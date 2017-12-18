@@ -12,7 +12,7 @@
     <complexType name="学生信息">
         <sequence>
             <element name="学生信息" type="tns:学生基本信息"/>
-            <element name="学生成绩" type="tns:学生成绩类型"/>
+            <element name="学生成绩" type="tns:学生成绩"/>
         </sequence>
     </complexType>
 
@@ -42,7 +42,7 @@
     
     <complexType name="学生成绩">
         <sequence minOccurs="0" maxOccurs="8">
-            <element name="成绩详情" type="tns:成绩详情类型"/>
+            <element name="成绩详情" type="tns:成绩详情"/>
         </sequence>
     </complexType>
 
