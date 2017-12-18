@@ -2,7 +2,6 @@
 <schema xmlns="http://www.w3.org/2001/XMLSchema"
         targetNamespace="http://jw.nju.edu.cn/schema"
         xmlns:tns="http://jw.nju.edu.cn/schema"
-        xmlns:nju="http://www.nju.edu.cn/schema"
         elementFormDefault="qualified">
     <import namespace="http://www.nju.edu.cn/schema"
             schemaLocation="PersonInfo.xsd" />

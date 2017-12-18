@@ -4,11 +4,23 @@
         xmlns:nju="http://www.nju.edu.cn/schema"
         elementFormDefault="qualified">
     <include schemaLocation="Department.xsd"/>
-    
+
+    <element name="人员信息" type="nju:人员信息"/>
+
+    <complexType name="人员信息">
+        <sequence>
+            <element name="姓名" type="nju:人员名称"/>
+            <element name="出生日期" type="date"/>
+            <element name="性别" type="nju:性别"/>
+            <element name="身份证号" type="nju:身份证号"/>
+            <element name="所在部门" type="nju:部门名称"/>
+        </sequence>
+    </complexType>
+
     <simpleType name="人员名称">
         <restriction base="string">
-            <minLength value="2"/>
-            <maxLength value="10"/>
+            <minLength value="1"/>
+            <maxLength value="20"/>
         </restriction>
     </simpleType>
 
@@ -26,16 +38,5 @@
         </restriction>
     </simpleType>
 
-    <complexType name="人员信息">
-        <sequence>
-            <element name="姓名" type="nju:人员名称"/>
-            <element name="出生日期" type="date"/>
-            <element name="性别" type="nju:性别"/>
-            <element name="身份证号" type="nju:身份证号"/>
-            <element name="所在部门" type="nju:部门名称"/>
-        </sequence>
-    </complexType>
-
-    <element name="人员信息" type="nju:人员信息"/>
 
 </schema>

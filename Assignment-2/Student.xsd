@@ -8,24 +8,24 @@
     <import namespace="http://www.nju.edu.cn/schema"
         schemaLocation="PersonInfo.xsd" />
     <include schemaLocation="ScoreList.xsd" />
-    
+
+    <element name="学生信息" type="tns:学生信息"/>
+
     <complexType name="学生信息">
         <sequence>
-            <element name="学生信息" type="tns:学生基本信息"/>
+            <element name="学生基本信息" type="tns:学生基本信息"/>
             <element name="学生成绩" type="tns:学生成绩"/>
         </sequence>
     </complexType>
 
     <complexType name="学生基本信息">
         <sequence>
-            <element name="基本信息" type="nju:人员信息"/>
+            <element name="人员信息" type="nju:人员信息"/>
             <element name="学号" type="tns:学号"/>
             <element name="入学时间" type="date"/>
             <element name="学籍状态" type="tns:学籍状态"/>
         </sequence>
     </complexType>
-
-    <element name="学生信息" type="tns:学生信息"/>
 
     <simpleType name="学号">
         <restriction base="string">

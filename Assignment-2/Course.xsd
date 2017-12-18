@@ -6,21 +6,24 @@
         elementFormDefault="qualified">
     <import namespace="http://www.nju.edu.cn/schema" schemaLocation="PersonInfo.xsd"/>
 
+    <element name="课程信息"/>
 
     <complexType name="课程信息">
-        <element name="课程编号" type="tns:课程编号"/>
-        <element name="课程名称" type="tns:课程名称"/>
-        <element name="任课老师" type="nju:人员名称"/>
-        <element name="选课类型" type="tns:课程类型"/>
-        <element name="开课季度" type="tns:开课季度"/>
-        <element name="上课时间与地点表" type="tns:上课时间与地点表类型"/>
-        <element name="备注" type="tns:备注"/>
+        <sequence>
+            <element name="课程编号" type="tns:课程编号"/>
+            <element name="课程名称" type="tns:课程名称"/>
+            <element name="任课老师" type="nju:人员名称"/>
+            <element name="选课类型" type="tns:课程类型"/>
+            <element name="开课季度" type="tns:开课季度"/>
+            <element name="上课时间与地点表" type="tns:上课时间与地点表类型"/>
+            <element name="备注" type="tns:备注"/>
+        </sequence>
     </complexType>
 
     <simpleType name="课程编号">
-    	<restriction base="string">
+        <restriction base="string">
             <length value="8"/>
-    	</restriction>
+        </restriction>
     </simpleType>
 
     <simpleType name="课程名称">
@@ -40,7 +43,7 @@
 
     <complexType name="上课时间与地点表类型">
         <sequence maxOccurs="unbounded">
-            <element name="上课时间与地点" type="tns:上课时间与地点类型" />
+            <element name="上课时间与地点" type="tns:上课时间与地点类型"/>
         </sequence>
     </complexType>
 
@@ -54,7 +57,7 @@
             <enumeration value="秋"/>
         </restriction>
     </simpleType>
-    
+
     <simpleType name="备注">
         <restriction base="string">
             <minLength value="1"/>
