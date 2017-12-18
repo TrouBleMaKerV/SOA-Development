@@ -4,52 +4,64 @@
         xmlns:tns="http://jw.nju.edu.cn/schema"
         xmlns:nju="http://www.nju.edu.cn/schema"
         elementFormDefault="qualified">
-    <import namespace="http://www.nju.edu.cn/schema" schemaLocation="PersonInfo.xsd"></import>
-    <element name="课程" type="tns:课程类型"></element>
-    <complexType name="课程类型">
-        <attribute name="课程编号" type="tns:课程编号类型"></attribute>
-        <attribute name="课程名称" type="tns:课程名称类型"></attribute>
-        <attribute name="课程时间" type="tns:课程时间类型"></attribute>
-        <attribute name="任课老师" type="tns:任课老师类型"></attribute>
-        <attribute name="课时上课时间" type="tns:上课时间类型"></attribute>
-        <attribute name="上课地点类型" type="tns:上课地点类型"></attribute>
-    </complexType>
-    <complexType name="上课时间类型">
-        <sequence minOccurs="1" maxOccurs="unbounded">
-            <element name="上课日期" type="date"></element>
-            <element name="开始时间" type="time"></element>
-            <element name="结束时间" type="time"></element>
+    <import namespace="http://www.nju.edu.cn/schema" schemaLocation="PersonInfo.xsd"/>
+
+    <element name="课程信息"/>
+
+    <complexType name="课程信息">
+        <sequence>
+            <element name="课程编号" type="tns:课程编号"/>
+            <element name="课程名称" type="tns:课程名称"/>
+            <element name="任课老师" type="nju:人员名称"/>
+            <element name="选课类型" type="tns:课程类型"/>
+            <element name="开课季度" type="tns:开课季度"/>
+            <element name="上课时间与地点表" type="tns:上课时间与地点表类型"/>
+            <element name="备注" type="tns:备注"/>
         </sequence>
     </complexType>
-    <complexType name="上课地点类型">
-        <attribute name="教学楼名" type="string"></attribute>
-        <attribute name="教室号" type="string"></attribute>
-    </complexType>
-    <complexType name="任课老师类型">
-        <sequence minOccurs="1" maxOccurs="unbounded">
-            <element name="任课老师信息" type="nju:个人信息类型"></element>
-        </sequence>
-    </complexType>
-    <complexType name="课程时间类型">
-        <attribute name="开课年份" type="gYear"></attribute>
-        <attribute name="开课季度" type="tns:季度类型"></attribute>
-    </complexType>
-    <simpleType name="季度类型">
+
+    <simpleType name="课程编号">
         <restriction base="string">
-            <enumeration value="春"></enumeration>
-            <enumeration value="夏"></enumeration>
-            <enumeration value="秋"></enumeration>
-            <enumeration value="冬"></enumeration>
+            <length value="8"/>
         </restriction>
     </simpleType>
-    <simpleType name="课程编号类型">
-    	<restriction base="string">
-    		<length value="8"></length>
-    	</restriction>
-    </simpleType>
-    <simpleType name="课程名称类型">
+
+    <simpleType name="课程名称">
         <restriction base="string">
-            <length value="20"></length>
+            <minLength value="1"/>
+            <maxLength value="20"/>
+        </restriction>
+    </simpleType>
+
+    <simpleType name="课程类型">
+        <restriction base="string">
+            <enumeration value="核心"/>
+            <enumeration value="平台"/>
+            <enumeration value="选修"/>
+        </restriction>
+    </simpleType>
+
+    <complexType name="上课时间与地点表类型">
+        <sequence maxOccurs="unbounded">
+            <element name="上课时间与地点" type="tns:上课时间与地点类型"/>
+        </sequence>
+    </complexType>
+
+    <simpleType name="上课时间与地点类型">
+        <restriction base="string"/>
+    </simpleType>
+
+    <simpleType name="开课季度">
+        <restriction base="string">
+            <enumeration value="春"/>
+            <enumeration value="秋"/>
+        </restriction>
+    </simpleType>
+
+    <simpleType name="备注">
+        <restriction base="string">
+            <minLength value="1"/>
+            <maxLength value="500"/>
         </restriction>
     </simpleType>
 </schema>

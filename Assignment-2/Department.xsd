@@ -41,7 +41,7 @@
             <element name="部门名称" type="nju:部门名称"/>
             <element name="部门电话" type="nju:办公室电话"/>
             <element name="校区" type="nju:校区地址"/>
-            <element name="部门地址" type="nju:部门类型"/>
+            <element name="部门地址" type="nju:部门地址"/>
         </sequence>
     </complexType>
 
