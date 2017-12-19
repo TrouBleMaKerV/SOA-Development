@@ -74,6 +74,16 @@ public class Generate {
                 handler.characters(grade.toCharArray(), 0,grade.length());
                 handler.endElement("", "", "得分");
                 handler.endElement("", "", "成绩");
+                handler.startElement("", "", "课程名称", impl);
+                handler.characters(courseList.getCourse_name().toCharArray(), 0,courseList.getCourse_name().length());
+                handler.endElement("", "", "课程名称");
+                handler.startElement("", "", "课程编号", impl);
+                handler.characters(courseList.getCourse_id().toCharArray(), 0,courseList.getCourse_id().length());
+                handler.endElement("", "", "课程编号");
+                handler.startElement("", "", "成绩性质", impl);
+                handler.characters(courseList.getScore_type().toCharArray(), 0,courseList.getScore_type().length());
+                handler.endElement("", "", "成绩性质");
+
                 handler.endElement("", "", "课程成绩");
 
             }
