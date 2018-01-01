@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+        targetNamespace="http://www.nju.edu.cn/schema"
+        xmlns:nju="http://www.nju.edu.cn/schema"
+        elementFormDefault="qualified">
+    
+    <simpleType name="ErrorReasonDiscription">
+        <restriction base="string">
+            <enumeration value="不存在该学号"></enumeration>
+            <enumeration value="不存在该课程编号"></enumeration>
+        </restriction>
+    </simpleType>
+
+    <complexType name="ErrorDiscription">
+        <sequence>
+            <element name="ErrorReason" type="nju:ErrorReasonDiscription"></element>
+            <element name="ErrorID" type="string"></element>
+        </sequence>
+    </complexType>
+
+    <element name="ErrorFind" type="nju:ErrorDiscription"></element>
+</schema>

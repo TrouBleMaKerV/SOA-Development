@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+        targetNamespace="http://jw.nju.edu.cn/schema"
+        xmlns:tns="http://jw.nju.edu.cn/schema" elementFormDefault="qualified">
+    <import namespace="http://www.nju.edu.cn/schema"
+            schemaLocation="PersonInfo.xsd"/>
+
+    <include schemaLocation="Student.xsd"/>
+    <include schemaLocation="Course.xsd"/>
+
+    <element name="课程成绩列表" type="tns:课程成绩列表"/>
+
+    <complexType name="课程成绩列表">
+        <sequence minOccurs="0" maxOccurs="unbounded">
+            <element name="课程成绩" type="tns:课程成绩"/>
+        </sequence>
+    </complexType>
+
+    <complexType name="课程成绩">
+        <sequence minOccurs="0" maxOccurs="unbounded">
+            <element name="成绩" type="tns:成绩细则"/>
+        </sequence>
+        <attribute name="课程名称" type="tns:课程名称"/>
+        <attribute name="课程编号" type="tns:课程编号"/>
+        <attribute name="成绩性质" type="tns:成绩性质"/>
+    </complexType>
+
+    <complexType name="成绩细则">
+        <sequence>
+            <element name="学号" type="tns:学号"/>
+            <element name="分数" type="tns:分数"/>
+        </sequence>
+    </complexType>
+
+    <simpleType name="分数">
+        <restriction base="int">
+            <minInclusive value="0"/>
+            <maxInclusive value="100"/>
+        </restriction>
+    </simpleType>
+
+    <simpleType name="成绩性质">
+        <restriction base="string">
+            <enumeration value="平时成绩"/>
+            <enumeration value="作业成绩"/>
+            <enumeration value="期中成绩"/>
+            <enumeration value="期末成绩"/>
+            <enumeration value="总评成绩"/>
+        </restriction>
+    </simpleType>
+</schema>

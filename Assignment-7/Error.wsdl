@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<description
+        xmlns="http://www.w3.org/ns/wsdl"
+        targetNamespace="http://jw.nju.edu.cn/error/wsdl"
+        xmlns:error="http://jw.nju.edu.cn/error/wsdl"
+        xmlns:xs="http://www.w3.org/2001/XMLSchema"
+>
+
+    <documenttation>成绩管理错误处理WEB服务</documenttation>
+
+    <types>
+        <xs:import
+                xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                namespace="http://www.nju.edu.cn/schema"
+                schemaLocation="schema/Fault.xsd" />
+    </types>
+    <interface name="scoreErrorInterface">
+        <fault name="sidNoneExist" element="error:NotFoundError">
+            <documentation>学号不存在</documentation>
+        </fault>
+        <fault name="cidNoneExist" element="error:NotFoundError">
+            <documentation>课程编号不存在</documentation>
+        </fault>
+        <fault name="scoreTypeError" element="error:InvalidParamError">
+            <documentation>成绩类型格式错误</documentation>
+        </fault>
+        <fault name="scoreError" element="error:InvalidParamError">
+            <documentation>分数格式错误</documentation>
+        </fault>
+    </interface>
+
+</description>
+
+

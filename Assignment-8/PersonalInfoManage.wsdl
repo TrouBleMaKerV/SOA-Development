@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<descirption
+    xmlns="http://www.w3.org/ns/wsdl"
+    targetNamespace="http://jw.nju.edu.cn/wsdl/PersonalInfoManage"
+    xmlns:tns="http://jw.nju.edu.cn/wsdl/PersonalInfoManage"
+    xmlns:nju="http://jw.nju.edu.cn/schema"
+    xmlns:wsdlx="http://www.w3.org/ns/wsdl-extensions"
+    xmlns:wsoap="http://www.w3.org/ns/wsdl/soap"
+    xmlns:soap="http://www.w3.org/2003/05/soap-envelope">
+    <types>
+        <xs:schema
+                xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                targetNamespace="http://jw.nju.edu.cn/schema">
+            <xs:element name="studentInfo" type="nju:学生基本信息"></xs:element>
+            <xs:element name="studentId" type="nju:学号"></xs:element>
+            <xs:element name="modifyInfoResponse" type="xs:string"></xs:element>
+            <xs:element name="deleteInfoResponse" type="xs:string"></xs:element>
+            <xs:element name="addInfoResponse" type="xs:string"></xs:element>
+            <xs:element name="searchInfoFault" type="xs:string"></xs:element>
+            <xs:element name="modifyInfoFault" type="xs:string"></xs:element>
+            <xs:element name="deleteInfoFault" type="xs:string"></xs:element>
+            <xs:element name="addInfoFault" type="xs:string"></xs:element>
+        </xs:schema>
+    </types>
+    <interface name="manageInfoInterface">
+        <fault name="searchFault" element="nju:searchInfoFault"></fault>
+        <fault name="modifyFault" element="nju:modifyInfoFault"></fault>
+        <fault name="deleteFault" element="nju:deleteInfoFault"></fault>
+        <fault name="addFault" element="nju:addInfoFault"></fault>
+        <operation name="searchInfo"
+                   pattern="http://www.w3.org/ns/wsdl/in-out"
+                   style="http://www.w3.org/ns/wsdl/style/iri"
+                   wsdlx:safe = "true">
+            <input messageLabel="In" element="nju:studentId"/>
+            <output messageLabel="Out" element="nju:studentInfo"/>
+            <outfault ref="tns:searchFault" messageLabel="Out"></outfault>
+        </operation>
+        <operation name="modifyInfo"
+                   pattern="http://www.w3.org/ns/wsdl/in-out"
+                   style="http://www.w3.org/ns/wsdl/style/iri"
+                   wsdlx:safe = "true">
+            <input messageLabel="In" element="nju:studentInfo"/>
+            <output messageLabel="Out" element="nju:modifyInfoResponse"/>
+            <outfault ref="tns:modifyFault" messageLabel="Out"/>
+        </operation>
+        <operation name="deleteInfo"
+                   pattern="http://www.w3.org/ns/wsdl/in-out"
+                   style="http://www.w3.org/ns/wsdl/style/iri"
+                   wsdlx:safe = "true">
+            <input messageLabel="In" element="nju:studentId"/>
+            <output messageLabel="Out" element="nju:deleteInfoResponse"/>
+            <outfault ref="tns:deleteFault" messageLabel="Out"></outfault>
+        </operation>
+        <operation name="addInfo"
+                   pattern="http://www.w3.org/ns/wsdl/in-out"
+                   style="http://www.w3.org/ns/wsdl/style/iri"
+                   wsdlx:safe = "true">
+            <input messageLabel="In" element="nju:studentInfo"/>
+            <output messageLabel="Out" element="nju:addInfoResponse"/>
+            <outfault ref="tns:addFault" messageLabel="Out"/>
+        </operation>
+    </interface>
+    <binding name="manageInfoBinding"
+        interface="tns:manageInfoInterface"
+        type="http://www.w3.org/ns/wsdl/soap"
+        wsoap:protocol="http://www.w3.org/2003/05/soap/bindings/HTTP/">
+        <operation ref="tns:searchInfo"
+                   wsoap:mep="http://www.w3.org/2003/05/soap/mep/soap-response"/>
+        <fault ref="tns:searchFault"
+               wsoap:code="soap:Sender"/>
+        <operation ref="tns:modifyInfo"
+                   wsoap:mep="http://www.w3.org/2003/05/soap/mep/soap-response"/>
+        <fault ref="tns:modifyFault"
+               wsoap:code="soap:Sender"/>
+        <operation ref="tns:deleteInfo"
+                   wsoap:mep="http://www.w3.org/2003/05/soap/mep/soap-response"/>
+        <fault ref="tns:deleteFault"
+               wsoap:code="soap:Sender"/>
+        <operation ref="tns:addInfo"
+                   wsoap:mep="http://www.w3.org/2003/05/soap/mep/soap-response"/>
+        <fault ref="tns:addFault"
+               wsoap:code="soap:Sender"/>
+    </binding>
+    <service name="manageInfoService"
+             interface="tms:manageInfoInterface"   >
+        <endpoint name="manageInfoEndpoint"
+                  binding="tns:manageInfoBinding"
+                  address="http://jw.nju.edu.cn/PersonalInfoManage">
+        </endpoint>
+    </service>
+</descirption>
