@@ -7,6 +7,8 @@
         xmlns:wsoap="http://www.w3.org/ns/wsdl/soap"
         xmlns:xs="http://www.w3.org/2001/XMLSchema"
         xmlns:error="http://jw.nju.edu.cn/Error/wsdl"
+        xmlns:wsdlx="http://www.w3.org/ns/wsdl-extensions"
+
 >
 
     <documentation>成绩管理WEB服务</documentation>
@@ -35,7 +37,8 @@
 
         <operation name="addScore"
                    pattern="http://www.w3.org/ns/wsdl/in-out"
-                   style="http://www.w3.org/ns/wsdl/style/iri">
+                   style="http://www.w3.org/ns/wsdl/style/iri"
+                   wsdlx:safe = "true">
             <input messageLabel="In" element="tns:课程成绩列表"/>
             <input messageLabel="Out" element="tns:课程成绩列表"/>
             <outfault ref="error:sidNoneExist" messageLabel="Out"></outfault>
@@ -46,7 +49,8 @@
 
         <operation name="modifyScore"
                    pattern="http://www.w3.org/ns/wsdl/in-out"
-                   style="http://www.w3.org/ns/wsdl/style/iri">
+                   style="http://www.w3.org/ns/wsdl/style/iri"
+                   wsdlx:safe = "true">
             <input messageLabel="In" element="tns:课程成绩列表"/>
             <input messageLabel="Out" element="tns:课程成绩列表"/>
             <outfault ref="error:sidNoneExist" messageLabel="Out"></outfault>
@@ -77,7 +81,7 @@
              interface="tns:scoreInterface">
         <endpoint name="ScoreEndpoint"
                   binding="tns:ScoreBinding"
-                  address="http://www.nju.edu.cn:8080/score"/>
+                  address="http://www.nju.edu.cn:8080/score"/> 
     </service>
 
 </description>
