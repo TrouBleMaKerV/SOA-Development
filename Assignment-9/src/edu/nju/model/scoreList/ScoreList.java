@@ -16,8 +16,10 @@ public class ScoreList {
     @XmlElement(name = "课程成绩", namespace = NameSpace.JW_NAME_SPACE)
     private List<CourseScore> courseScoreList;
 
-    public ScoreList() {
-        courseScoreList = new ArrayList<>();
+    public ScoreList(){}
+
+    public ScoreList(List<CourseScore> courseScoreList) {
+        this.courseScoreList = courseScoreList;
     }
 
     public List<CourseScore> getCourseScoreList() {
