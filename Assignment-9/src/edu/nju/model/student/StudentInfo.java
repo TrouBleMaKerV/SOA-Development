@@ -42,4 +42,8 @@ public class StudentInfo {
     public void setScoreInfos(List<ScoreInfo> scoreInfos) {
         this.scoreInfos = scoreInfos;
     }
+
+    public void addScoreInfo(ScoreInfo scoreInfo){
+        this.scoreInfos.add(scoreInfo);
+    }
 }
