@@ -14,7 +14,7 @@ import java.util.List;
 public class ScoreList {
 
     @XmlElement(name = "课程成绩", namespace = NameSpace.JW_NAME_SPACE)
-    private List<CourseScore> courseScoreList;
+    private List<CourseScore> courseScoreList = new ArrayList<CourseScore>();
 
     public ScoreList(){}
 
