@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="http://controller.assignment10.soa12.com" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="http://controller.assignment10.soa12.com" xmlns:intf="http://controller.assignment10.soa12.com" xmlns:tns1="http://schemaModel.assignment10.soa12.com" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<!--WSDL created by Apache Axis version: 1.4
+Built on Apr 22, 2006 (06:55:48 PDT)-->
+ <wsdl:types>
+  <schema elementFormDefault="qualified" targetNamespace="http://schemaModel.assignment10.soa12.com" xmlns="http://www.w3.org/2001/XMLSchema">
+   <complexType name="AuthRequestType">
+    <sequence>
+     <element name="email" nillable="true" type="xsd:string"/>
+     <element name="password" nillable="true" type="xsd:string"/>
+    </sequence>
+   </complexType>
+   <complexType name="IdentifyType">
+    <sequence>
+     <element name="email" nillable="true" type="xsd:string"/>
+     <element name="userType" nillable="true" type="xsd:anyType"/>
+    </sequence>
+   </complexType>
+   <complexType name="NotFoundType">
+    <sequence>
+     <element name="notFoundId" nillable="true" type="xsd:string"/>
+     <element name="notFoundReason" nillable="true" type="xsd:anyType"/>
+    </sequence>
+   </complexType>
+   <complexType name="IdNotFoundException">
+    <sequence>
+     <element name="faultInfo" nillable="true" type="tns1:NotFoundType"/>
+    </sequence>
+   </complexType>
+   <complexType name="AuthFaultType">
+    <sequence>
+     <element name="id" nillable="true" type="xsd:string"/>
+     <element name="reason" nillable="true" type="xsd:string"/>
+    </sequence>
+   </complexType>
+   <complexType name="PasswordErrorException">
+    <sequence>
+     <element name="faultInfo" nillable="true" type="tns1:AuthFaultType"/>
+    </sequence>
+   </complexType>
+  </schema>
+  <schema elementFormDefault="qualified" targetNamespace="http://controller.assignment10.soa12.com" xmlns="http://www.w3.org/2001/XMLSchema">
+   <import namespace="http://schemaModel.assignment10.soa12.com"/>
+   <element name="authRequestType" type="tns1:AuthRequestType"/>
+   <element name="identifyReturn" type="tns1:IdentifyType"/>
+   <element name="fault" type="tns1:IdNotFoundException"/>
+   <element name="fault1" type="tns1:PasswordErrorException"/>
+  </schema>
+ </wsdl:types>
+
+   <wsdl:message name="identifyResponse">
+
+      <wsdl:part element="impl:identifyReturn" name="identifyReturn"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="IdNotFoundException">
+
+      <wsdl:part element="impl:fault" name="fault"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="PasswordErrorException">
+
+      <wsdl:part element="impl:fault1" name="fault"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="identifyRequest">
+
+      <wsdl:part element="impl:authRequestType" name="authRequestType"/>
+
+   </wsdl:message>
+
+   <wsdl:portType name="AuthController">
+
+      <wsdl:operation name="identify" parameterOrder="authRequestType">
+
+         <wsdl:input message="impl:identifyRequest" name="identifyRequest"/>
+
+         <wsdl:output message="impl:identifyResponse" name="identifyResponse"/>
+
+         <wsdl:fault message="impl:PasswordErrorException" name="PasswordErrorException"/>
+
+         <wsdl:fault message="impl:IdNotFoundException" name="IdNotFoundException"/>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="AuthControllerSoapBinding" type="impl:AuthController">
+
+      <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="identify">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="identifyRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="identifyResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+         <wsdl:fault name="PasswordErrorException">
+
+            <wsdlsoap:fault name="PasswordErrorException" use="literal"/>
+
+         </wsdl:fault>
+
+         <wsdl:fault name="IdNotFoundException">
+
+            <wsdlsoap:fault name="IdNotFoundException" use="literal"/>
+
+         </wsdl:fault>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="AuthControllerService">
+
+      <wsdl:port binding="impl:AuthControllerSoapBinding" name="AuthController">
+
+         <wsdlsoap:address location="http://localhost:8080//services/com/soa12/assignment10/controller/AuthController"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>
