@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<descirption
+        xmlns="http://www.w3.org/ns/wsdl"
+        targetNamespace="http://jw.nju.edu.cn/wsdl/Login"
+        xmlns:tns="http://jw.nju.edu.cn/wsdl/Login"
+        xmlns:nju="http://jw.nju.edu.cn/schema"
+        xmlns:wsdlx="http://www.w3.org/ns/wsdl-extensions"
+        xmlns:wsoap="http://www.w3.org/ns/wsdl/soap"
+        xmlns:soap="http://www.w3.org/2003/05/soap-envelope">
+    <types >
+        <xs:schema
+                xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                targetNamespace="http://jw.nju.edu.cn/schema"
+                xmlns="http://jw.nju.edu.cn/schema">
+            <xs:element name="loginForm" type="loginFormType"></xs:element>
+            <xs:complexType name="loginFormType">
+                <xs:sequence>
+                    <xs:element name="username" type="xs:string"></xs:element>
+                    <xs:element name="password" type="xs:string"></xs:element>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:element name="loginResponse" type="xs:string"></xs:element>
+            <xs:element name="loginError" type="xs:string"></xs:element>
+        </xs:schema>
+    </types>
+    <interface name="loginInterface">
+        <fault name="loginFault" element="nju:loginError"></fault>
+        <operation name="login"
+                   pattern="http://www.w3.org/ns/wsdl/in-out"
+                   style="http://www.w3.org/ns/wsdl/style/iri"
+                   wsdlx:safe = "true">
+            <input messageLabel="In" element="nju:loginForm"/>
+            <output messageLabel="Out" element="nju:"/>
+            <outfault ref="tns:loginFault" messageLabel="Out"></outfault>
+        </operation>
+    </interface>
+    <binding name="loginBinding"
+             interface="tns:loginInterface"
+             type="http://www.w3.org/ns/wsdl/soap"
+             wsoap:protocol="http://www.w3.org/2003/05/soap/bindings/HTTP/">
+        <operation ref="tns:login"
+                   wsoap:mep="http://www.w3.org/2003/05/soap/mep/soap-response"/>
+        <fault ref="tns:loginFault"
+               wsoap:code="soap:Sender"/>
+    </binding>
+    <service name="loginService"
+             interface="tms:loginInterface">
+        <endpoint name="loginEndpoint"
+                  binding="tns:loginBinding"
+                  address="http://jw.nju.edu.cn/Login">
+        </endpoint>
+    </service>
+</descirption>

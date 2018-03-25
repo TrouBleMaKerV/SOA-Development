@@ -4,7 +4,7 @@
         xmlns:tns="http://jw.nju.edu.cn/schema"
         xmlns:nju="http://www.nju.edu.cn/schema"
         elementFormDefault="qualified">
-    <import namespace="http://www.nju.edu.cn/schema" schemaLocation="../../../Assignment-8/PersonInfo.xsd"/>
+    <import namespace="http://www.nju.edu.cn/schema" schemaLocation="../../../../Assignment-8/PersonInfo.xsd"/>
 
     <element name="课程信息"/>
 

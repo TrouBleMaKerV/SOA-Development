@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+        targetNamespace="http://www.nju.edu.cn/schema"
+        xmlns:nju="http://www.nju.edu.cn/schema"
+        elementFormDefault="qualified">
+
+    <simpleType name="部门编号">
+        <restriction base="string">
+            <length value="4"/>
+        </restriction>
+    </simpleType>
+
+    <simpleType name="部门名称">
+        <restriction base="string">
+            <minLength value="1"/>
+            <maxLength value="10"/>
+        </restriction>
+    </simpleType>
+
+    <simpleType name="办公室电话">
+        <restriction base="string">
+            <minLength value="10"/>
+            <maxLength value="12"/>
+        </restriction>
+    </simpleType>
+
+    <simpleType name="校区地址">
+        <restriction base="string">
+            <enumeration value="鼓楼"/>
+            <enumeration value="仙林"/>
+        </restriction>
+    </simpleType>
+
+    <simpleType name="部门地址" >
+        <restriction base="string"/>
+    </simpleType>
+    
+    <complexType name="部门信息">
+        <sequence>
+            <element name="部门编号" type="nju:部门编号"/>
+            <element name="部门名称" type="nju:部门名称"/>
+            <element name="部门电话" type="nju:办公室电话"/>
+            <element name="校区" type="nju:校区地址"/>
+            <element name="部门地址" type="nju:部门地址"/>
+        </sequence>
+    </complexType>
+
+    <element name="部门信息" type="nju:部门信息"/>
+
+</schema>
