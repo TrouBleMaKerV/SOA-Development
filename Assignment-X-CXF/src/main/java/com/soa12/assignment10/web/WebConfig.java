@@ -21,7 +21,7 @@ public class WebConfig {
 
     @Bean
     public ServletRegistrationBean dispatcherServlet() {
-        return new ServletRegistrationBean(new CXFServlet(), "/soap-api/*");
+        return new ServletRegistrationBean(new CXFServlet(), "/soa12/*");
     }
 
     @Bean(name= Bus.DEFAULT_BUS_ID)
