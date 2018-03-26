@@ -24,6 +24,7 @@ public class PasswordErrorException
 
     public PasswordErrorException(String reason, String id, String message) {
         super(message);
+        faultInfo=new AuthFaultType();
         faultInfo.setReason(reason);
         faultInfo.setId(id);
     }

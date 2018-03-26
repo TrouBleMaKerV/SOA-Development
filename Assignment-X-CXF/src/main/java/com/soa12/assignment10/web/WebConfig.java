@@ -9,15 +9,13 @@ import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import javax.annotation.Resource;
 import javax.xml.ws.Endpoint;
 
 @Configuration
 public class WebConfig {
-//    @Resource
+
     private AuthController authController=new AuthController();
 
-//    private AuthController authController=new AuthController().getAuthController();
 
     @Bean
     public ServletRegistrationBean dispatcherServlet() {
@@ -31,7 +29,6 @@ public class WebConfig {
 
     @Bean(name = "authEndpoint")
     public Endpoint endpoint1() {
-//        authController=new AuthController();
         EndpointImpl endpoint = new EndpointImpl(springBus(), authController);
         endpoint.publish("/auth");
         return endpoint;

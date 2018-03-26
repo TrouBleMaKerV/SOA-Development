@@ -23,6 +23,7 @@ public class IdNotFoundException
 
     public IdNotFoundException(NotFoundReasonType reasonType, String notFoundId, String massage) {
         super(massage);
+        faultInfo=new NotFoundType();
         faultInfo.setNotFoundId(notFoundId);
         faultInfo.setNotFoundReason(reasonType);
     }
