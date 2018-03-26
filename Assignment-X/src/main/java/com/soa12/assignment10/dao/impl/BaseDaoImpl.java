@@ -100,5 +100,19 @@ public class BaseDaoImpl implements BaseDao {
             e.printStackTrace();
         }
     }
+
+    @Override
+    public void delete(Object bean) {
+        try {
+            System.out.println("ready to getsession");
+            Session session =HibernateUtil.getSession() ;
+            Transaction tx=session.beginTransaction();
+            session.delete(bean);
+            tx.commit();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }
 

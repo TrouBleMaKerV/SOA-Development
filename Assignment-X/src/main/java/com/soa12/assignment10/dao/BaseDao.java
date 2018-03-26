@@ -18,4 +18,6 @@ public interface BaseDao {
 
     public void update(Object bean);
 
+    public void delete(Object bean);
+
 }

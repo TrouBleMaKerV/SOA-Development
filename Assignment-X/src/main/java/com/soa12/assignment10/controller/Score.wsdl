@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<description
+        xmlns="http://www.w3.org/ns/wsdl"
+        targetNamespace="http://jw.nju.edu.cn/wsdl"
+        xmlns:tns="http://jw.nju.edu.cn/wsdl"
+        xmlns:soap="http://www.w3.org/2003/05/soap-envelope"
+        xmlns:wsoap="http://www.w3.org/ns/wsdl/soap"
+        xmlns:xs="http://www.w3.org/2001/XMLSchema"
+        xmlns:error="http://jw.nju.edu.cn/Error/wsdl"
+        xmlns:wsdlx="http://www.w3.org/ns/wsdl-extensions"
+
+>
+
+    <documentation>成绩管理WEB服务</documentation>
+
+    <import namespace="http://jw.nju.edu.cn/Error/wsdl" location="Error.wsdl"></import>
+
+    <types>
+        <xs:import
+                xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                namespace="http://jw.nju.edu.cn/schema"
+                schemaLocation="schema/ScoreList.xsd" />
+        <xs:import
+                xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                namespace="http://www.nju.edu.cn/schema"
+                schemaLocation="schema/Fault.xsd" />
+    </types>
+
+    <interface name="scoreInterface" extends="error:scoreErrorInterface">
+        <operation name="getScore"
+                   pattern="http://www.w3.org/ns/wsdl/in-out"
+                   style="http://www.w3.org/ns/wsdl/style/iri">
+            <input messageLabel="In" element="tns:学号"></input>
+            <output messageLabel="Out" element="tns:课程成绩列表"></output>
+            <outfault ref="error:sidNoneExist" messageLabel="Out"></outfault>
+        </operation>
+
+        <operation name="addScore"
+                   pattern="http://www.w3.org/ns/wsdl/in-out"
+                   style="http://www.w3.org/ns/wsdl/style/iri"
+                   wsdlx:safe = "true">
+            <input messageLabel="In" element="tns:课程成绩列表"/>
+            <input messageLabel="Out" element="tns:课程成绩列表"/>
+            <outfault ref="error:sidNoneExist" messageLabel="Out"></outfault>
+            <outfault ref="error:cidNoneExist" messageLabel="Out"></outfault>
+            <outfault ref="error:scoreTypeFault" messageLabel="Out"></outfault>
+            <outfault ref="error:scoreFault" messageLabel="Out"></outfault>
+        </operation>
+
+        <operation name="modifyScore"
+                   pattern="http://www.w3.org/ns/wsdl/in-out"
+                   style="http://www.w3.org/ns/wsdl/style/iri"
+                   wsdlx:safe = "true">
+            <input messageLabel="In" element="tns:课程成绩列表"/>
+            <input messageLabel="Out" element="tns:课程成绩列表"/>
+            <outfault ref="error:sidNoneExist" messageLabel="Out"></outfault>
+            <outfault ref="error:cidNoneExist" messageLabel="Out"></outfault>
+            <outfault ref="error:scoreTypeFault" messageLabel="Out"></outfault>
+            <outfault ref="error:scoreFault" messageLabel="Out"></outfault>
+        </operation>
+    </interface>
+
+    <binding name="ScoreBinding"
+             interface="tns:scoreInterface"
+             type="http://www.w3.org/ns/wsdl/soap"
+             wsoap:protocol="http://www.w3.org/2003/05/soap/bindings/HTTP/">
+        <operation ref="tns:getScore"
+                   wsoap:mep="http://www.w3.org/2003/05/soap/mep/soap-response" />
+        <operation ref="tns:addScore"
+                   wsoap:mep="http://www.w3.org/2003/05/soap/mep/request-response" />
+        <operation ref="tns:modifyScore"
+                   wsoap:mep="http://www.w3.org/2003/05/soap/mep/request-response" />
+
+        <fault ref="error:sidNoneExist" wsoap:code="soap:Sender" />
+        <fault ref="error:cidNoneExist" wsoap:code="soap:Sender" />
+        <fault ref="error:scoreTypeFault" wsoap:code="soap:Sender" />
+        <fault ref="error:scoreFault" wsoap:code="soap:Sender" />
+    </binding>
+
+    <service name="ScoreService"
+             interface="tns:scoreInterface">
+        <endpoint name="ScoreEndpoint"
+                  binding="tns:ScoreBinding"
+                  address="http://www.nju.edu.cn:8080/score"/> 
+    </service>
+
+</description>
