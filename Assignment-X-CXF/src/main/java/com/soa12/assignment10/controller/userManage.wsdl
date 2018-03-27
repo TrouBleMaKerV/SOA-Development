@@ -1,0 +1,150 @@
+<wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:tns="http://jw.nju.edu.cn/schema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" name="UserManageControllerService" targetNamespace="http://jw.nju.edu.cn/schema">
+    <wsdl:types>
+        <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://jw.nju.edu.cn/schema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://jw.nju.edu.cn/schema">
+            <xs:complexType name="用户信息类型">
+                <xs:sequence>
+                    <xs:element name="学号" type="xs:string"/>
+                    <xs:element name="姓名" type="xs:string"/>
+                    <xs:element name="入学时间" type="xs:string"/>
+                    <xs:element name="学籍状态" type="xs:string"/>
+                    <xs:element name="性别" type="xs:string"/>
+                    <xs:element name="生日" type="xs:string"/>
+                    <xs:element name="身份证号" type="xs:string"/>
+                    <xs:element name="所在部门" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="NotFoundType">
+                <xs:sequence>
+                    <xs:element name="NotFoundReason" type="tns:NotFoundReasonType"/>
+                    <xs:element name="NotFoundId" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="UserIdType">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="学号" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:simpleType name="NotFoundReasonType">
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value="邮箱不存在"/>
+                    <xs:enumeration value="未找到输入学号的成绩"/>
+                    <xs:enumeration value="课程不存在"/>
+                    <xs:enumeration value="未找到输入课程的成绩"/>
+                    <xs:enumeration value="学号不存在"/>
+                    <xs:enumeration value="学号已存在"/>
+                </xs:restriction>
+            </xs:simpleType>
+            <xs:element name="NotFoundFault" nillable="true" type="tns:NotFoundType"/>
+            <xs:element name="modifyInfo" nillable="true" type="tns:用户信息类型"/>
+            <xs:element name="学生信息类型" nillable="true" type="tns:用户信息类型"/>
+            <xs:element name="searchInfo" nillable="true" type="tns:UserIdType"/>
+            <xs:element name="addInfo" nillable="true" type="tns:用户信息类型"/>
+            <xs:element name="deleteInfo" nillable="true" type="tns:UserIdType"/>
+        </xs:schema>
+    </wsdl:types>
+    <wsdl:message name="modifyInfoResponse">
+        <wsdl:part element="tns:学生信息类型" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="IdNotFoundException">
+        <wsdl:part element="tns:NotFoundFault" name="IdNotFoundException"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="addInfo">
+        <wsdl:part element="tns:addInfo" name="addInfo"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="modifyInfo">
+        <wsdl:part element="tns:modifyInfo" name="modifyInfo"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="searchInfo">
+        <wsdl:part element="tns:searchInfo" name="searchInfo"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="addInfoResponse">
+        <wsdl:part element="tns:学生信息类型" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="searchInfoResponse">
+        <wsdl:part element="tns:学生信息类型" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="deleteInfoResponse">
+        <wsdl:part element="tns:学生信息类型" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="deleteInfo">
+        <wsdl:part element="tns:deleteInfo" name="deleteInfo"></wsdl:part>
+    </wsdl:message>
+    <wsdl:portType name="UserManage">
+        <wsdl:operation name="modifyInfo">
+            <wsdl:input message="tns:modifyInfo" name="modifyInfo" wsam:Action="auth/verifyRequest" wsaw:Action="auth/verifyRequest"></wsdl:input>
+            <wsdl:output message="tns:modifyInfoResponse" name="modifyInfoResponse" wsam:Action="auth/verifyResponse" wsaw:Action="auth/verifyResponse"></wsdl:output>
+            <wsdl:fault message="tns:IdNotFoundException" name="IdNotFoundException" wsam:Action="http://jw.nju.edu.cn/schema/UserManage/modifyInfo/Fault/IdNotFoundException"></wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="searchInfo">
+            <wsdl:input message="tns:searchInfo" name="searchInfo" wsam:Action="auth/verifyRequest" wsaw:Action="auth/verifyRequest"></wsdl:input>
+            <wsdl:output message="tns:searchInfoResponse" name="searchInfoResponse" wsam:Action="auth/verifyResponse" wsaw:Action="auth/verifyResponse"></wsdl:output>
+            <wsdl:fault message="tns:IdNotFoundException" name="IdNotFoundException" wsam:Action="http://jw.nju.edu.cn/schema/UserManage/searchInfo/Fault/IdNotFoundException"></wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="addInfo">
+            <wsdl:input message="tns:addInfo" name="addInfo" wsam:Action="auth/verifyRequest" wsaw:Action="auth/verifyRequest"></wsdl:input>
+            <wsdl:output message="tns:addInfoResponse" name="addInfoResponse" wsam:Action="auth/verifyResponse" wsaw:Action="auth/verifyResponse"></wsdl:output>
+            <wsdl:fault message="tns:IdNotFoundException" name="IdNotFoundException" wsam:Action="http://jw.nju.edu.cn/schema/UserManage/addInfo/Fault/IdNotFoundException"></wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="deleteInfo">
+            <wsdl:input message="tns:deleteInfo" name="deleteInfo" wsam:Action="auth/verifyRequest" wsaw:Action="auth/verifyRequest"></wsdl:input>
+            <wsdl:output message="tns:deleteInfoResponse" name="deleteInfoResponse" wsam:Action="auth/verifyResponse" wsaw:Action="auth/verifyResponse"></wsdl:output>
+            <wsdl:fault message="tns:IdNotFoundException" name="IdNotFoundException" wsam:Action="http://jw.nju.edu.cn/schema/UserManage/deleteInfo/Fault/IdNotFoundException"></wsdl:fault>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="UserManageControllerServiceSoapBinding" type="tns:UserManage">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="modifyInfo">
+            <soap:operation soapAction="UserManage/modifyInfo" style="document"/>
+            <wsdl:input name="modifyInfo">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="modifyInfoResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="IdNotFoundException">
+                <soap:fault name="IdNotFoundException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="searchInfo">
+            <soap:operation soapAction="UserManage/searchInfo" style="document"/>
+            <wsdl:input name="searchInfo">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="searchInfoResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="IdNotFoundException">
+                <soap:fault name="IdNotFoundException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="addInfo">
+            <soap:operation soapAction="UserManage/addInfo" style="document"/>
+            <wsdl:input name="addInfo">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="addInfoResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="IdNotFoundException">
+                <soap:fault name="IdNotFoundException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="deleteInfo">
+            <soap:operation soapAction="UserManage/deleteInfo" style="document"/>
+            <wsdl:input name="deleteInfo">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="deleteInfoResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="IdNotFoundException">
+                <soap:fault name="IdNotFoundException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="UserManageControllerService">
+        <wsdl:port binding="tns:UserManageControllerServiceSoapBinding" name="UserManagePort">
+            <soap:address location="http://localhost:8080/soa12/userManage"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

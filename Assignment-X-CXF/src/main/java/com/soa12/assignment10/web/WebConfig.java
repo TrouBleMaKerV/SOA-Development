@@ -1,6 +1,7 @@
 package com.soa12.assignment10.web;
 
 import com.soa12.assignment10.controller.AuthController;
+import com.soa12.assignment10.controller.UserManageController;
 import org.apache.cxf.Bus;
 import org.apache.cxf.bus.spring.SpringBus;
 import org.apache.cxf.jaxws.EndpointImpl;
@@ -15,7 +16,7 @@ import javax.xml.ws.Endpoint;
 public class WebConfig {
 
     private AuthController authController=new AuthController();
-
+    private UserManageController userManageController = new UserManageController();
 
     @Bean
     public ServletRegistrationBean dispatcherServlet() {
@@ -33,5 +34,10 @@ public class WebConfig {
         endpoint.publish("/auth");
         return endpoint;
     }
-
+    @Bean(name = "userManageEndpoint")
+    public Endpoint endpoint2() {
+        EndpointImpl endpoint = new EndpointImpl(springBus(), userManageController);
+        endpoint.publish("/userManage");
+        return endpoint;
+    }
 }
