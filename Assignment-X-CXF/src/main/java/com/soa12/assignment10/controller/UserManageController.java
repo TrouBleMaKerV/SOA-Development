@@ -98,6 +98,7 @@ public class UserManageController implements UserManage {
         if (studentEntity != null){
             throw new Fault( new IdNotFoundException(NotFoundReasonType.学号已存在,String.valueOf(id),"已存在该学号"));
         }
+        studentEntity = new StudentsEntity();
         studentEntity.setBirthday(studentInfoType.getBirthday());
         studentEntity.setDepartment(studentInfoType.getDepartment());
         studentEntity.setiDcard(studentInfoType.getIDcard());
