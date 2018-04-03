@@ -18,6 +18,13 @@ public class UserIdType {
 //    }
 
 
+    public UserIdType() {
+    }
+
+    public UserIdType(int studentId) {
+        this.studentId = studentId;
+    }
+
     public int getStudentId() {
         return studentId;
     }

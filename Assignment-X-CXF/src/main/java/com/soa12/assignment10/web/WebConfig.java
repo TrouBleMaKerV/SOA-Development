@@ -1,6 +1,7 @@
 package com.soa12.assignment10.web;
 
 import com.soa12.assignment10.controller.AuthController;
+import com.soa12.assignment10.controller.ScoreManageController;
 import com.soa12.assignment10.controller.UserManageController;
 import org.apache.cxf.Bus;
 import org.apache.cxf.bus.spring.SpringBus;
@@ -17,6 +18,7 @@ public class WebConfig {
 
     private AuthController authController=new AuthController();
     private UserManageController userManageController = new UserManageController();
+    private ScoreManageController scoreManageController = new ScoreManageController();
 
     @Bean
     public ServletRegistrationBean dispatcherServlet() {
@@ -38,6 +40,12 @@ public class WebConfig {
     public Endpoint endpoint2() {
         EndpointImpl endpoint = new EndpointImpl(springBus(), userManageController);
         endpoint.publish("/userManage");
+        return endpoint;
+    }
+    @Bean(name = "scoreManageEndpoint")
+    public Endpoint endpoint3() {
+        EndpointImpl endpoint = new EndpointImpl(springBus(), scoreManageController);
+        endpoint.publish("/scoreManage");
         return endpoint;
     }
 }

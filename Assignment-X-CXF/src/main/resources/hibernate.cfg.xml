@@ -15,6 +15,7 @@
 
         <mapping class="com.soa12.assignment10.model.UsersEntity"/>
         <mapping class="com.soa12.assignment10.model.StudentsEntity"/>
+        <mapping class="com.soa12.assignment10.model.ScoreEntity"/>
         <!-- <property name="connection.username"/> -->
         <!-- <property name="connection.password"/> -->
 
