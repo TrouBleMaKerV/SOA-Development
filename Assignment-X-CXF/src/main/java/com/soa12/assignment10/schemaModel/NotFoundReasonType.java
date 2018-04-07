@@ -33,6 +33,7 @@ public enum NotFoundReasonType {
     课程不存在,
     未找到输入课程的成绩,
     学号不存在,
+    该成绩不存在,
     学号已存在;
 
     public String value() {

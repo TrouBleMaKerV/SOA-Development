@@ -3,28 +3,30 @@ package com.soa12.assignment10.model;
 import com.soa12.assignment10.schemaModel.ScoreType;
 
 import javax.persistence.*;
-import java.io.Serializable;
+import java.time.format.SignStyle;
 
 @Entity
 @Table(name = "score", schema = "soa", catalog = "")
-public class ScoreEntity implements Serializable {
+public class ScoreEntity {
+    private int recordid;
     private String cid;
-    private ScoreType scoreType;
+    private String scoreType;
+    //    private ScoreType scoreType;
     private String sid;
-    private int score;
-
-    public ScoreEntity(String cid, ScoreType scoreType, String sid, int score) {
-        this.cid = cid;
-        this.scoreType = scoreType;
-        this.sid = sid;
-        this.score = score;
-    }
-
-    public ScoreEntity() {
-    }
+    private Integer score;
 
     @Id
-    @Column(name = "cid", nullable = false)
+    @Column(name = "recordid")
+    public int getRecordid() {
+        return recordid;
+    }
+
+    public void setRecordid(int recordid) {
+        this.recordid = recordid;
+    }
+
+    @Basic
+    @Column(name = "cid")
     public String getCid() {
         return cid;
     }
@@ -33,19 +35,25 @@ public class ScoreEntity implements Serializable {
         this.cid = cid;
     }
 
-    @Id
-    @Enumerated(EnumType.STRING)
-    @Column(name = "scoreType", nullable = false)
-    public ScoreType getScoreType() {
+    @Basic
+    @Column(name = "scoreType")
+    public String getScoreType() {
         return scoreType;
     }
 
-    public void setScoreType(ScoreType scoreType) {
+    public void setScoreType(String scoreType) {
         this.scoreType = scoreType;
     }
+//    public ScoreType getScoreType() {
+//        return scoreType;
+//    }
+//
+//    public void setScoreType(ScoreType scoreType) {
+//        this.scoreType = scoreType;
+//    }
 
-    @Id
-    @Column(name = "sid", nullable = false)
+    @Basic
+    @Column(name = "sid")
     public String getSid() {
         return sid;
     }
@@ -55,13 +63,38 @@ public class ScoreEntity implements Serializable {
     }
 
     @Basic
-    @Column(name = "score", nullable = false)
-    public int getScore() {
+    @Column(name = "score")
+    public Integer getScore() {
         return score;
     }
 
-    public void setScore(int score) {
+    public void setScore(Integer score) {
         this.score = score;
     }
-}
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        ScoreEntity that = (ScoreEntity) o;
+
+        if (recordid != that.recordid) return false;
+        if (cid != null ? !cid.equals(that.cid) : that.cid != null) return false;
+//        if (scoreType != null ? !scoreType.equals(that.scoreType) : that.scoreType != null) return false;
+        if (sid != null ? !sid.equals(that.sid) : that.sid != null) return false;
+        if (score != null ? !score.equals(that.score) : that.score != null) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = recordid;
+        result = 31 * result + (cid != null ? cid.hashCode() : 0);
+//        result = 31 * result + (scoreType != null ? scoreType.hashCode() : 0);
+        result = 31 * result + (sid != null ? sid.hashCode() : 0);
+        result = 31 * result + (score != null ? score.hashCode() : 0);
+        return result;
+    }
+}

@@ -13,7 +13,6 @@ import javax.jws.WebService;
 import javax.jws.soap.SOAPBinding;
 import javax.xml.ws.Action;
 import javax.xml.ws.FaultAction;
-import javax.xml.ws.Holder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,12 +26,13 @@ public class ScoreManageController implements ScoreManage {
 
     @WebMethod(action = "ScoreManage/getScore")
     @WebResult(name = "课程成绩列表", targetNamespace = "http://jw.nju.edu.cn/schema", partName = "parameters")
-    @Action(input = "auth/verifyRequest", output = "auth/verifyResponse", fault = {
+    @Action(input = "ScoreManage/getScoreRequest", output = "ScoreManage/getScoreResponse", fault = {
             @FaultAction(className = IdNotFoundException.class)
     })
     public CourseScoreListType getScore(UserIdType userIdType) throws IdNotFoundException {
         CourseScoreListType courseScoreListType = new CourseScoreListType();
         String sid = String.valueOf(userIdType.getStudentId());
+        System.out.println(sid);
         List<ScoreEntity> scoreEntities = new ArrayList<>();
         scoreEntities = scoreDao.findBySid(sid);
         if (scoreEntities == null || scoreEntities.isEmpty()){
@@ -49,7 +49,7 @@ public class ScoreManageController implements ScoreManage {
             }
             List<CourseScoreType> courseScoreTypes = new ArrayList<>();
             courseScoreTypes.add(new CourseScoreType(scoreEntity.getSid(),scoreEntity.getScore()));
-            CourseScore courseScore = new CourseScore(courseScoreTypes, scoreEntity.getCid(),scoreEntity.getScoreType());
+            CourseScore courseScore = new CourseScore(courseScoreTypes, scoreEntity.getCid(),ScoreType.valueOf(scoreEntity.getScoreType()));
             courseScores.add(courseScore);
         }
         courseScoreListType.setCourseScores(courseScores);
@@ -58,17 +58,17 @@ public class ScoreManageController implements ScoreManage {
 
     @WebMethod(action = "ScoreManage/addScore")
     @WebResult(name = "课程成绩列表", targetNamespace = "http://jw.nju.edu.cn/schema", partName = "parameters")
-    @Action(input = "auth/verifyRequest", output = "auth/verifyResponse", fault = {
+    @Action(input = "ScoreManage/addScoreRequest", output = "ScoreManage/addScoreResponse", fault = {
             @FaultAction(className = IdNotFoundException.class)
     })
     public CourseScoreListType addScore(AddScoreType addScoreType) throws IdNotFoundException {
         String sid = addScoreType.getSid();
 
-        List<ScoreEntity> scoreEntities = new ArrayList<>();
-        scoreEntities = scoreDao.findBySid(sid);
-        if (scoreEntities == null || scoreEntities.isEmpty()){
-            throw new IdNotFoundException(NotFoundReasonType.未找到输入学号的成绩, sid,"");
-        }
+//        List<ScoreEntity> scoreEntities = new ArrayList<>();
+//        scoreEntities = scoreDao.findBySid(sid);
+//        if (scoreEntities == null || scoreEntities.isEmpty()){
+//            throw new IdNotFoundException(NotFoundReasonType.未找到输入学号的成绩, sid,"");
+//        }
 
         String cid = addScoreType.getCid();
 
@@ -91,7 +91,11 @@ public class ScoreManageController implements ScoreManage {
         }
 
         int s = Integer.parseInt(sid);
-        ScoreEntity scoreEntity = new ScoreEntity(cid, scoreType, sid ,score);
+        ScoreEntity scoreEntity = new ScoreEntity();
+        scoreEntity.setCid(cid);
+        scoreEntity.setScoreType(type);
+        scoreEntity.setSid(sid);
+        scoreEntity.setScore(score);
         scoreDao.save(scoreEntity);
         UserIdType userIdType = new UserIdType(s);
         return getScore(userIdType);
@@ -99,7 +103,7 @@ public class ScoreManageController implements ScoreManage {
 
     @WebMethod(action = "ScoreManage/modifyScore")
     @WebResult(name = "课程成绩列表", targetNamespace = "http://jw.nju.edu.cn/schema", partName = "parameters")
-    @Action(input = "auth/verifyRequest", output = "auth/verifyResponse", fault = {
+    @Action(input = "ScoreManage/modifyScoreRequest", output = "ScoreManage/modifyScoreResponse", fault = {
             @FaultAction(className = IdNotFoundException.class)
     })
     public CourseScoreListType modifyScore(AddScoreType addScoreType) throws IdNotFoundException {
@@ -107,8 +111,18 @@ public class ScoreManageController implements ScoreManage {
 
         List<ScoreEntity> scoreEntities = new ArrayList<>();
         scoreEntities = scoreDao.findBySid(sid);
-        if (scoreEntities == null || scoreEntities.isEmpty()){
+        if (scoreEntities == null || scoreEntities.size()==0){
             throw new IdNotFoundException(NotFoundReasonType.未找到输入学号的成绩, sid,"");
+        }
+
+        boolean cidExist=false;
+        for(ScoreEntity score:scoreEntities){
+            if (addScoreType.getCid().equals(score.getCid())){
+                cidExist=true;
+            }
+        }
+        if (cidExist==false){
+            throw new IdNotFoundException(NotFoundReasonType.课程不存在,addScoreType.getCid(),"课程编号不存在");
         }
 
         String cid = addScoreType.getCid();
@@ -119,6 +133,7 @@ public class ScoreManageController implements ScoreManage {
         }
 
         String type = addScoreType.getType();
+        System.out.println("获取到的类型"+type);
         ScoreType scoreType = null;
         if (type.equals("期中成绩")){
             scoreType = ScoreType.期中成绩;
@@ -132,10 +147,55 @@ public class ScoreManageController implements ScoreManage {
         }
 
         int s = Integer.parseInt(sid);
-        ScoreEntity scoreEntity = new ScoreEntity(cid, scoreType, sid ,score);
-        scoreDao.save(scoreEntity);
+
+        //用来存储符合条件的score
+        ScoreEntity tempScore=new ScoreEntity();
+        for (ScoreEntity score1:scoreEntities){
+            if (score1.getCid().equals(cid) && score1.getSid().equals(sid) && score1.getScoreType().equals(type)){
+                tempScore=score1;
+            }
+        }
+
+        tempScore.setScore(score);
+        System.out.println("修改成绩准备回填成绩这时候成绩的类型为"+tempScore.getScoreType());
+        scoreDao.update(tempScore);
         UserIdType userIdType = new UserIdType(s);
         return getScore(userIdType);
     }
 
+    @WebMethod(action = "ScoreManage/deleteScore")
+    @WebResult(name = "课程成绩列表", targetNamespace = "http://jw.nju.edu.cn/schema", partName = "parameters")
+    @Action(input = "ScoreManage/deleteScoreRequest", output = "ScoreManage/deleteScoreResponse", fault = {
+            @FaultAction(className = IdNotFoundException.class)
+    })
+    public CourseScoreListType deleteScore(AddScoreType addScoreType) throws IdNotFoundException {
+        String sid = addScoreType.getSid();
+
+        List<ScoreEntity> scoreEntities = new ArrayList<>();
+        scoreEntities = scoreDao.findBySid(sid);
+        if (scoreEntities == null || scoreEntities.size()==0){
+            throw new IdNotFoundException(NotFoundReasonType.未找到输入学号的成绩, sid,"");
+        }
+
+        ScoreEntity todele = new ScoreEntity();
+        boolean cidExist=false;
+        for(ScoreEntity score:scoreEntities){
+            if (addScoreType.getCid().equals(score.getCid()) && addScoreType.getType().equals(score.getScoreType()) && addScoreType.getScore() == score.getScore()){
+                cidExist=true;
+                todele = score;
+            }
+        }
+        if (cidExist==false){
+            throw new IdNotFoundException(NotFoundReasonType.该成绩不存在,addScoreType.getCid(),"该成绩不存在");
+        }
+
+        int s = Integer.parseInt(sid);
+        scoreDao.delete(todele);
+        UserIdType userIdType = new UserIdType(s);
+        return getScore(userIdType);
+    }
+
+
+
 }
+
